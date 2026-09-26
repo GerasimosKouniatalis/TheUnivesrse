@@ -1,201 +1,732 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="el">
 <head>
-<title>Η Ιστορία του Σύμπαντος</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Η ιστορία του Σύμπαντος από το Big Bang μέχρι τη σημερινή κοσμική εποχή.">
+  <title>Η Ιστορία του Σύμπαντος</title>
+  <style>
+    :root {
+      --bg: #030611;
+      --bg-soft: #090f25;
+      --card: rgba(12, 19, 48, 0.68);
+      --card-strong: rgba(17, 26, 63, 0.9);
+      --line: rgba(147, 197, 253, 0.22);
+      --text: #f8fbff;
+      --muted: #aebbd8;
+      --blue: #7dd3fc;
+      --cyan: #67e8f9;
+      --purple: #c084fc;
+      --pink: #f0abfc;
+      --accent: linear-gradient(135deg, #67e8f9 0%, #818cf8 48%, #d946ef 100%);
+      --shadow: 0 25px 80px rgba(0,0,0,.38);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(99,102,241,.16), transparent 30%),
+        radial-gradient(circle at 88% 20%, rgba(217,70,239,.13), transparent 26%),
+        radial-gradient(circle at 50% 78%, rgba(34,211,238,.08), transparent 30%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::before {
+      opacity: .48;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.92) 0 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(147,197,253,.8) 0 1px, transparent 1.3px);
+      background-size: 88px 88px, 133px 133px;
+      background-position: 0 0, 31px 47px;
+      animation: drift 55s linear infinite;
+    }
+
+    body::after {
+      background: linear-gradient(to bottom, transparent 0 78%, rgba(3,6,17,.88) 100%);
+      z-index: -1;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0,0,0); }
+      to { transform: translate3d(-90px, -70px, 0); }
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      background: rgba(3, 6, 17, .6);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .nav-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 18px rgba(103,232,249,.9);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: .93rem;
+      transition: color .2s ease, transform .2s ease;
+    }
+
+    .nav-links a:hover { color: #fff; transform: translateY(-1px); }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      isolation: isolate;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(3,6,17,.97) 0%, rgba(3,6,17,.82) 42%, rgba(3,6,17,.45) 100%),
+        linear-gradient(180deg, rgba(3,6,17,.18), var(--bg) 97%),
+        url("https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/History-of-the-Universe.jpg/960px-History-of-the-Universe.jpg") center/cover no-repeat;
+      filter: saturate(1.15) contrast(1.05);
+      z-index: -2;
+      transform: scale(1.03);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      right: -140px;
+      top: 8%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(125,211,252,.32), rgba(129,140,248,.14) 40%, rgba(217,70,239,.02) 68%, transparent 70%);
+      filter: blur(4px);
+      box-shadow: 0 0 100px rgba(129,140,248,.12);
+      z-index: -1;
+      animation: floatOrb 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatOrb {
+      to { transform: translate(-28px, 24px) scale(1.06); }
+    }
+
+    .hero-content {
+      padding: 110px 0 90px;
+      width: min(820px, 100%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(125,211,252,.28);
+      background: rgba(11, 20, 49, .5);
+      border-radius: 999px;
+      color: #d9f7ff;
+      font-size: .82rem;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 14px rgba(103,232,249,.9);
+    }
+
+    h1 {
+      margin: 22px 0 18px;
+      font-size: clamp(3.2rem, 8vw, 7.6rem);
+      line-height: .95;
+      letter-spacing: -.055em;
+      max-width: 9ch;
+      text-wrap: balance;
+    }
+
+    .gradient-text {
+      background: var(--accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 690px;
+      color: #d8e2f8;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      text-decoration: none;
+      font-weight: 750;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #050816;
+      box-shadow: 0 12px 34px rgba(129,140,248,.22);
+    }
+
+    .btn-secondary {
+      color: #f8fbff;
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(14px);
+    }
+
+    .btn:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.25); }
+
+    section { padding: 94px 0; }
+
+    .section-kicker {
+      color: var(--cyan);
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(2rem, 4.5vw, 4.2rem);
+      line-height: 1.06;
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-top: 18px;
+    }
+
+    .intro-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      padding: clamp(28px, 5vw, 54px);
+      background:
+        linear-gradient(135deg, rgba(125,211,252,.12), transparent 38%),
+        linear-gradient(315deg, rgba(217,70,239,.12), transparent 42%),
+        var(--card);
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .intro-card::before {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      right: -70px;
+      top: -80px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: inset 0 0 80px rgba(129,140,248,.1), 0 0 60px rgba(217,70,239,.08);
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 54px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 26px;
+      top: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: linear-gradient(var(--cyan), #818cf8 48%, #d946ef);
+      box-shadow: 0 0 24px rgba(103,232,249,.28);
+    }
+
+    .event {
+      position: relative;
+      margin-left: 68px;
+      padding: 24px 26px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(15,24,57,.82), rgba(9,15,37,.72));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 14px 40px rgba(0,0,0,.18);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .event:hover {
+      transform: translateX(6px);
+      border-color: rgba(125,211,252,.25);
+      background: linear-gradient(180deg, rgba(18,29,69,.94), rgba(10,17,41,.84));
+    }
+
+    .event::before {
+      content: attr(data-step);
+      position: absolute;
+      left: -66px;
+      top: 22px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #071020;
+      border: 2px solid var(--cyan);
+      color: #e5fbff;
+      font-weight: 900;
+      box-shadow: 0 0 28px rgba(103,232,249,.22);
+    }
+
+    .event h3 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+      line-height: 1.2;
+    }
+
+    .event time {
+      display: inline-flex;
+      margin-top: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(129,140,248,.11);
+      color: #cdd5ff;
+      font-size: .83rem;
+      font-weight: 700;
+      border: 1px solid rgba(129,140,248,.16);
+    }
+
+    .event p { color: var(--muted); margin: 14px 0 0; }
+
+    .solar-image {
+      margin-top: 18px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.09);
+      position: relative;
+      max-height: 360px;
+    }
+
+    .solar-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-height: 360px;
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    .stats-grid {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      min-height: 190px;
+      padding: 24px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(125,211,252,.12), transparent 34%),
+        var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 18px 45px rgba(0,0,0,.16);
+    }
+
+    .stat strong {
+      font-size: clamp(1.8rem, 3vw, 2.75rem);
+      letter-spacing: -.045em;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .stat span { color: var(--muted); font-size: .95rem; }
+
+    .questions {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .question:hover { transform: translateY(-2px); border-color: rgba(192,132,252,.26); }
+
+    .q-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(103,232,249,.16), rgba(217,70,239,.18));
+      color: #f3e8ff;
+      font-weight: 900;
+    }
+
+    .question p { margin: 7px 0 0; color: #d7dff0; }
+
+    .sources {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .source-card {
+      min-height: 155px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 20px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      text-decoration: none;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .source-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(103,232,249,.26);
+      box-shadow: 0 18px 50px rgba(0,0,0,.24);
+    }
+
+    .source-card small { color: var(--cyan); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .source-card strong { font-size: 1.15rem; line-height: 1.25; }
+    .source-card span { color: var(--muted); }
+
+    footer {
+      padding: 28px 0 44px;
+      color: #8996b5;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .to-top {
+      text-decoration: none;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 12px;
+      color: #d9e2f5;
+      background: rgba(255,255,255,.04);
+    }
+
+    .reveal {
+      animation: reveal .7s ease both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 28%;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(24px) scale(.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .questions { grid-template-columns: 1fr; }
+      .sources { grid-template-columns: 1fr; }
+      .hero { min-height: 82vh; }
+    }
+
+    @media (max-width: 700px) {
+      .container { width: min(100% - 28px, 1160px); }
+      .nav-inner { min-height: 60px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 90px 0 74px; }
+      section { padding: 70px 0; }
+      .timeline::before { left: 20px; }
+      .event { margin-left: 54px; padding: 21px 19px; }
+      .event::before { left: -54px; width: 40px; height: 40px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat { min-height: 150px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
 </head>
+<body id="top">
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top"><span class="brand-dot"></span> Cosmic Timeline</a>
+      <div class="nav-links">
+        <a href="#intro">Αρχή</a>
+        <a href="#timeline">Χρονογραμμή</a>
+        <a href="#numbers">Αριθμοί</a>
+        <a href="#questions">Ερωτήματα</a>
+        <a href="#sources">Πηγές</a>
+      </div>
+    </div>
+  </nav>
 
-<body>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow">13,8 δισεκατομμύρια χρόνια κοσμικής ιστορίας</span>
+        <h1>Η Ιστορία του <span class="gradient-text">Σύμπαντος</span></h1>
+        <p>Ένα ταξίδι από το θερμό και πυκνό πρώιμο Σύμπαν μέχρι τους γαλαξίες, τα άστρα, τους πλανήτες και τη σημερινή κοσμική εποχή.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#timeline">Ξεκίνα το ταξίδι ↓</a>
+          <a class="btn btn-secondary" href="#numbers">Δες το Σύμπαν σε αριθμούς</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<font color='#3f51b5'>
-<h1>Η Ιστορία του Σύμπαντος</h1>
-</font>
+  <main>
+    <section id="intro">
+      <div class="container">
+        <div class="intro-card reveal">
+          <div class="section-kicker">Η αρχή της κοσμικής ιστορίας</div>
+          <h2 class="section-title">Πώς άρχισαν όλα;</h2>
+          <p class="section-intro">Σύμφωνα με το σύγχρονο κοσμολογικό μοντέλο, το Σύμπαν εξελίχθηκε από μια εξαιρετικά θερμή και πυκνή αρχική κατάσταση και έκτοτε διαστέλλεται και ψύχεται. Η ιστορία που ακολουθεί περιγράφει μερικά από τα σημαντικότερα στάδια αυτής της εξέλιξης.</p>
+        </div>
+      </div>
+    </section>
 
-<p>
-Ένα ταξίδι περίπου 13,8 δισεκατομμυρίων ετών:
-από το θερμό και πυκνό πρώιμο Σύμπαν μέχρι τους γαλαξίες,
-τα άστρα, τους πλανήτες και τη σημερινή κοσμική εποχή.
-</p>
+    <section id="timeline">
+      <div class="container">
+        <div class="section-kicker">Από το πρώτο κλάσμα του δευτερολέπτου έως σήμερα</div>
+        <h2 class="section-title">Χρονογραμμή του Σύμπαντος</h2>
+        <p class="section-intro">Κάθε στάδιο αλλάζει ριζικά την εικόνα του Σύμπαντος — από στοιχειώδη σωματίδια και ακτινοβολία, σε άτομα, άστρα, γαλαξίες και τελικά πλανητικά συστήματα.</p>
 
-<img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/History-of-the-Universe.jpg/960px-History-of-the-Universe.jpg">
+        <div class="timeline">
+          <article class="event reveal" data-step="01">
+            <h3>Το πρώιμο Σύμπαν και το Big Bang</h3>
+            <time>Πριν από περίπου 13,8 δισεκατομμύρια χρόνια</time>
+            <p>Ο χώρος διαστέλλεται από μια πολύ θερμή και πυκνή κατάσταση. Στα πολύ πρώιμα στάδια το Σύμπαν αποτελείται από ακτινοβολία και στοιχειώδη σωματίδια.</p>
+          </article>
 
-<br>
-<br>
+          <article class="event reveal" data-step="02">
+            <h3>Κοσμικός πληθωρισμός</h3>
+            <time>Πολύ μικρό κλάσμα του πρώτου δευτερολέπτου</time>
+            <p>Η πληθωριστική θεωρία περιγράφει μια εξαιρετικά γρήγορη διαστολή του πολύ πρώιμου Σύμπαντος. Αποτελεί βασικό μηχανισμό για την εξήγηση της μεγάλης κλίμακας ομοιογένειας και της σχεδόν επίπεδης γεωμετρίας του Σύμπαντος.</p>
+          </article>
 
-<font color='#824ea0'>
-<h2>Πώς άρχισαν όλα;</h2>
-</font>
+          <article class="event reveal" data-step="03">
+            <h3>Πυρηνοσύνθεση</h3>
+            <time>Τα πρώτα λεπτά</time>
+            <p>Καθώς το Σύμπαν ψύχεται, πρωτόνια και νετρόνια σχηματίζουν τους πρώτους ελαφρούς ατομικούς πυρήνες, κυρίως υδρογόνο και ήλιο.</p>
+          </article>
 
-<p>
-Σύμφωνα με το σύγχρονο κοσμολογικό μοντέλο, το Σύμπαν εξελίχθηκε
-από μια εξαιρετικά θερμή και πυκνή αρχική κατάσταση και έκτοτε
-διαστέλλεται και ψύχεται. Η ιστορία που ακολουθεί περιγράφει
-μερικά από τα σημαντικότερα στάδια αυτής της εξέλιξης.
-</p>
+          <article class="event reveal" data-step="04">
+            <h3>Σχηματισμός ατόμων και Κοσμική Μικροκυματική Ακτινοβολία</h3>
+            <time>Περίπου 380.000 χρόνια μετά το Big Bang</time>
+            <p>Η θερμοκρασία έχει πέσει αρκετά ώστε ηλεκτρόνια και πυρήνες να σχηματίσουν ουδέτερα άτομα. Το Σύμπαν γίνεται διαφανές στο φως. Η ακτινοβολία εκείνης της εποχής ανιχνεύεται σήμερα ως Κοσμική Μικροκυματική Ακτινοβολία Υποβάθρου (CMB).</p>
+          </article>
 
-<br>
+          <article class="event reveal" data-step="05">
+            <h3>Οι Σκοτεινοί Αιώνες</h3>
+            <time>Μετά την επανασύνδεση</time>
+            <p>Υπάρχει ύλη και ακτινοβολία, αλλά δεν έχουν ακόμη σχηματιστεί άστρα. Η βαρύτητα αρχίζει σταδιακά να ενισχύει μικρές διακυμάνσεις της πυκνότητας.</p>
+          </article>
 
-<font color='#3f51b5'>
-<h2>Χρονογραμμή του Σύμπαντος</h2>
-</font>
+          <article class="event reveal" data-step="06">
+            <h3>Τα πρώτα άστρα</h3>
+            <time>Περίπου 200 εκατομμύρια χρόνια μετά το Big Bang</time>
+            <p>Τα πρώτα άστρα αρχίζουν να φωτίζουν το Σύμπαν. Η ακτινοβολία τους συμβάλλει στον επανιονισμό του μεσογαλαξιακού αερίου και τερματίζει σταδιακά τους κοσμικούς σκοτεινούς αιώνες.</p>
+          </article>
 
-<h3>1. Το πρώιμο Σύμπαν και το Big Bang</h3>
+          <article class="event reveal" data-step="07">
+            <h3>Οι πρώτοι γαλαξίες</h3>
+            <time>Εκατοντάδες εκατομμύρια χρόνια μετά το Big Bang</time>
+            <p>Η ύλη συγκεντρώνεται σε ολοένα μεγαλύτερες δομές. Σχηματίζονται γαλαξίες και, αργότερα, σμήνη και μεγάλης κλίμακας κοσμικές δομές.</p>
+          </article>
 
-<b>Πριν από περίπου 13,8 δισεκατομμύρια χρόνια</b>
+          <article class="event reveal" data-step="08">
+            <h3>Το Ηλιακό Σύστημα</h3>
+            <time>Πριν από περίπου 4,6 δισεκατομμύρια χρόνια</time>
+            <p>Πολύ αργότερα στην κοσμική ιστορία σχηματίζεται ο Ήλιος και γύρω του δημιουργείται το Ηλιακό Σύστημα, μέσα στον Γαλαξία μας.</p>
+            <div class="solar-image">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Sun_With_Planets.jpg/960px-Sun_With_Planets.jpg" alt="Ο Ήλιος και οι πλανήτες του Ηλιακού Συστήματος" loading="lazy">
+            </div>
+          </article>
 
-<p>
-Ο χώρος διαστέλλεται από μια πολύ θερμή και πυκνή κατάσταση.
-Στα πολύ πρώιμα στάδια το Σύμπαν αποτελείται από ακτινοβολία
-και στοιχειώδη σωματίδια.
-</p>
+          <article class="event reveal" data-step="09">
+            <h3>Το Σύμπαν σήμερα</h3>
+            <time>Σήμερα</time>
+            <p>Το Σύμπαν έχει ηλικία περίπου 13,8 δισεκατομμύρια χρόνια. Οι παρατηρήσεις δείχνουν ότι η κοσμική διαστολή σήμερα επιταχύνεται, φαινόμενο που στο καθιερωμένο κοσμολογικό μοντέλο αποδίδεται στη σκοτεινή ενέργεια.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<br>
+    <section id="numbers">
+      <div class="container">
+        <div class="section-kicker">Μερικά κοσμικά ορόσημα</div>
+        <h2 class="section-title">Το Σύμπαν σε αριθμούς</h2>
+        <div class="stats-grid">
+          <div class="stat reveal"><strong>13,8 δισ.</strong><span>χρόνια — περίπου η ηλικία του Σύμπαντος.</span></div>
+          <div class="stat reveal"><strong>380.000</strong><span>χρόνια — περίπου η εποχή από την οποία προέρχεται η CMB.</span></div>
+          <div class="stat reveal"><strong>~200 εκατ.</strong><span>χρόνια — η εποχή των πρώτων άστρων.</span></div>
+          <div class="stat reveal"><strong>4,6 δισ.</strong><span>χρόνια — περίπου η ηλικία του Ηλιακού Συστήματος.</span></div>
+        </div>
+      </div>
+    </section>
 
-<h3>2. Κοσμικός πληθωρισμός</h3>
+    <section id="questions">
+      <div class="container questions">
+        <div>
+          <div class="section-kicker">Ανοιχτά προβλήματα</div>
+          <h2 class="section-title">Μεγάλα ερωτήματα της Κοσμολογίας</h2>
+          <p class="section-intro">Παρότι γνωρίζουμε εντυπωσιακά πολλά για την κοσμική εξέλιξη, μερικά από τα πιο θεμελιώδη ερωτήματα παραμένουν ανοιχτά.</p>
+        </div>
 
-<b>Πολύ μικρό κλάσμα του πρώτου δευτερολέπτου</b>
+        <div class="question-list">
+          <div class="question reveal"><span class="q-number">01</span><p>Ποια είναι η φυσική φύση της σκοτεινής ύλης;</p></div>
+          <div class="question reveal"><span class="q-number">02</span><p>Τι ακριβώς είναι η σκοτεινή ενέργεια;</p></div>
+          <div class="question reveal"><span class="q-number">03</span><p>Ποιος μηχανισμός προκάλεσε τον κοσμικό πληθωρισμό;</p></div>
+          <div class="question reveal"><span class="q-number">04</span><p>Πώς σχηματίστηκαν τόσο γρήγορα οι πρώτες κοσμικές δομές;</p></div>
+          <div class="question reveal"><span class="q-number">05</span><p>Ποια θα είναι η μακροχρόνια εξέλιξη του Σύμπαντος;</p></div>
+        </div>
+      </div>
+    </section>
 
-<p>
-Η πληθωριστική θεωρία περιγράφει μια εξαιρετικά γρήγορη
-διαστολή του πολύ πρώιμου Σύμπαντος. Αποτελεί βασικό μηχανισμό
-για την εξήγηση της μεγάλης κλίμακας ομοιογένειας και της
-σχεδόν επίπεδης γεωμετρίας του Σύμπαντος.
-</p>
+    <section id="sources">
+      <div class="container">
+        <div class="section-kicker">Για περισσότερη εξερεύνηση</div>
+        <h2 class="section-title">Ενδεικτικές επιστημονικές πηγές</h2>
+        <div class="sources">
+          <a class="source-card reveal" href="https://science.nasa.gov/universe/" target="_blank" rel="noopener noreferrer">
+            <small>NASA Science</small>
+            <strong>Universe</strong>
+            <span>Εξερεύνησε το Σύμπαν ↗</span>
+          </a>
+          <a class="source-card reveal" href="https://science.nasa.gov/universe/the-big-bang/" target="_blank" rel="noopener noreferrer">
+            <small>NASA Science</small>
+            <strong>The Big Bang</strong>
+            <span>Δες την κοσμική αρχή ↗</span>
+          </a>
+          <a class="source-card reveal" href="https://science.nasa.gov/universe/dark-energy-dark-matter/" target="_blank" rel="noopener noreferrer">
+            <small>NASA Science</small>
+            <strong>Dark Energy &amp; Dark Matter</strong>
+            <span>Μάθε για το σκοτεινό Σύμπαν ↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<br>
-
-<h3>3. Πυρηνοσύνθεση</h3>
-
-<b>Τα πρώτα λεπτά</b>
-
-<p>
-Καθώς το Σύμπαν ψύχεται, πρωτόνια και νετρόνια σχηματίζουν
-τους πρώτους ελαφρούς ατομικούς πυρήνες, κυρίως υδρογόνο
-και ήλιο.
-</p>
-
-<br>
-
-<h3>4. Σχηματισμός ατόμων και Κοσμική Μικροκυματική Ακτινοβολία</h3>
-
-<b>Περίπου 380.000 χρόνια μετά το Big Bang</b>
-
-<p>
-Η θερμοκρασία έχει πέσει αρκετά ώστε ηλεκτρόνια και πυρήνες
-να σχηματίσουν ουδέτερα άτομα. Το Σύμπαν γίνεται διαφανές
-στο φως. Η ακτινοβολία εκείνης της εποχής ανιχνεύεται σήμερα
-ως Κοσμική Μικροκυματική Ακτινοβολία Υποβάθρου (CMB).
-</p>
-
-<br>
-
-<h3>5. Οι Σκοτεινοί Αιώνες</h3>
-
-<b>Μετά την επανασύνδεση</b>
-
-<p>
-Υπάρχει ύλη και ακτινοβολία, αλλά δεν έχουν ακόμη σχηματιστεί
-άστρα. Η βαρύτητα αρχίζει σταδιακά να ενισχύει μικρές
-διακυμάνσεις της πυκνότητας.
-</p>
-
-<br>
-
-<h3>6. Τα πρώτα άστρα</h3>
-
-<b>Περίπου 200 εκατομμύρια χρόνια μετά το Big Bang</b>
-
-<p>
-Τα πρώτα άστρα αρχίζουν να φωτίζουν το Σύμπαν.
-Η ακτινοβολία τους συμβάλλει στον επανιονισμό του
-μεσογαλαξιακού αερίου και τερματίζει σταδιακά
-τους κοσμικούς σκοτεινούς αιώνες.
-</p>
-
-<br>
-
-<h3>7. Οι πρώτοι γαλαξίες</h3>
-
-<b>Εκατοντάδες εκατομμύρια χρόνια μετά το Big Bang</b>
-
-<p>
-Η ύλη συγκεντρώνεται σε ολοένα μεγαλύτερες δομές.
-Σχηματίζονται γαλαξίες και, αργότερα, σμήνη και
-μεγάλης κλίμακας κοσμικές δομές.
-</p>
-
-<br>
-
-<h3>8. Το Ηλιακό Σύστημα</h3>
-
-<b>Πριν από περίπου 4,6 δισεκατομμύρια χρόνια</b>
-
-<p>
-Πολύ αργότερα στην κοσμική ιστορία σχηματίζεται ο Ήλιος και
-γύρω του δημιουργείται το Ηλιακό Σύστημα, μέσα στον Γαλαξία μας.
-</p>
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Sun_With_Planets.jpg/960px-Sun_With_Planets.jpg">
-
-<br>
-<br>
-
-<h3>9. Το Σύμπαν σήμερα</h3>
-
-<b>Σήμερα</b>
-
-<p>
-Το Σύμπαν έχει ηλικία περίπου 13,8 δισεκατομμύρια χρόνια.
-Οι παρατηρήσεις δείχνουν ότι η κοσμική διαστολή σήμερα
-επιταχύνεται, φαινόμενο που στο καθιερωμένο κοσμολογικό
-μοντέλο αποδίδεται στη σκοτεινή ενέργεια.
-</p>
-
-<br>
-
-<font color='#824ea0'>
-<h2>Το Σύμπαν σε αριθμούς</h2>
-</font>
-
-<ul>
-<li><b>13,8 δισεκατομμύρια χρόνια:</b> περίπου η ηλικία του Σύμπαντος.</li>
-<li><b>380.000 χρόνια:</b> περίπου η εποχή από την οποία προέρχεται η CMB.</li>
-<li><b>Περίπου 200 εκατομμύρια χρόνια:</b> η εποχή των πρώτων άστρων.</li>
-<li><b>4,6 δισεκατομμύρια χρόνια:</b> περίπου η ηλικία του Ηλιακού Συστήματος.</li>
-</ul>
-
-<br>
-
-<font color='#3f51b5'>
-<h2>Μεγάλα ερωτήματα της Κοσμολογίας</h2>
-</font>
-
-<u>Τι προσπαθούμε ακόμη να καταλάβουμε;</u>
-
-<ol>
-<li>Ποια είναι η φυσική φύση της σκοτεινής ύλης;</li>
-<li>Τι ακριβώς είναι η σκοτεινή ενέργεια;</li>
-<li>Ποιος μηχανισμός προκάλεσε τον κοσμικό πληθωρισμό;</li>
-<li>Πώς σχηματίστηκαν τόσο γρήγορα οι πρώτες κοσμικές δομές;</li>
-<li>Ποια θα είναι η μακροχρόνια εξέλιξη του Σύμπαντος;</li>
-</ol>
-
-<br>
-
-<font color='#824ea0'>
-<h2>Ενδεικτικές επιστημονικές πηγές</h2>
-</font>
-
-<ul>
-<li><a href="https://science.nasa.gov/universe/">NASA Science - Universe</a></li>
-<li><a href="https://science.nasa.gov/universe/the-big-bang/">NASA Science - The Big Bang</a></li>
-<li><a href="https://science.nasa.gov/universe/dark-energy-dark-matter/">NASA Science - Dark Energy and Dark Matter</a></li>
-</ul>
-
-<br>
-
-<b>Η Ιστορία του Σύμπαντος</b>
-<p>Εκπαιδευτική ιστοσελίδα HTML</p>
-
+  <footer>
+    <div class="container footer-inner">
+      <div><strong>Η Ιστορία του Σύμπαντος</strong><br>Εκπαιδευτική ιστοσελίδα HTML</div>
+      <a class="to-top" href="#top">↑ Επιστροφή στην κορυφή</a>
+    </div>
+  </footer>
 </body>
-
 </html>
